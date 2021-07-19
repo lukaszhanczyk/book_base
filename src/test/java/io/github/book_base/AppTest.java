@@ -1,4 +1,4 @@
-package io.github.mat3e;
+package io.github.book_base;
 
 import static org.junit.Assert.assertTrue;
 
