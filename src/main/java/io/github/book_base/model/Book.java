@@ -3,6 +3,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -19,6 +20,8 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @ManyToMany(mappedBy = "usersBooks")
+    private Set<User> usersWithBook;
 
     public Book() {
     }
