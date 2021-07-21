@@ -14,7 +14,7 @@ public class User {
     private Integer id;
     private String name;
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_books",
             joinColumns = @JoinColumn(name = "user_id"),

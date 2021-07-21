@@ -20,7 +20,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToMany(mappedBy = "usersBooks")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "usersBooks")
     private Set<User> usersWithBook;
 
     public Book() {

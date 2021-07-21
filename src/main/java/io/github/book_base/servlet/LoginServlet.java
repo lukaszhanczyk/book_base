@@ -31,13 +31,21 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        var user = session.getAttribute("loggedUser");
+        resp.setContentType("aplication/json;charset=UTF-8");
+        mapper.writeValue(resp.getOutputStream(),user);
+    }
+
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var reqUser = mapper.readValue(req.getInputStream(), User.class);
         try {
             var user = repository.findByNameAndPassword(reqUser.getName(), reqUser.getPassword());
             if(user.isPresent()){
-//                HttpSession session = req.getSession();
-//                session.setAttribute("logedUser", user);
+                HttpSession session = req.getSession();
+                session.setAttribute("loggedUser", user.get());
                 resp.setContentType("aplication/json;charset=UTF-8");
                 mapper.writeValue(resp.getOutputStream(),user.get());
             }else{
@@ -48,4 +56,9 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        session.removeAttribute("loggedUser");
+    }
 }
